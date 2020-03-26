@@ -19,7 +19,7 @@ app = Flask('__name__')
 
 
 @app.route('/predict',methods=['GET','POST'])
-def do_ocr():
+def get_scores():
     content = request.json
     image_path = content['image_path']
     # folder = content['type']
