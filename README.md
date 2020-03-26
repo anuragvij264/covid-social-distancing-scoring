@@ -12,4 +12,13 @@ Given a number of images of a certain location, computing a social distancing sc
 - https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Zhang_Single-Image_Crowd_Counting_CVPR_2016_paper.pdf
 - https://github.com/gjy3035/C-3-Framework
 ### Datasets to test(to be added further) 
-- Shanghai Tech Dataset
+- Shanghai Tech Dataset(Part A and Part B) 
+
+
+### Instructions
+
+Download pretrained csr-net model (https://drive.google.com/file/d/1KY11yLorynba14Sg7whFOfVeh2ja02wm/view?usp=sharing) and place it in checkpoints directory.
+```
+pip install -r requirements.txt
+python app.py 
+```
