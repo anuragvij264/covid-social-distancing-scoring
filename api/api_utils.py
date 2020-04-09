@@ -1,15 +1,16 @@
-
 from torchvision import transforms
 from PIL import Image
 import numpy as np
 import torch
 from model import CSRNet
-transform=transforms.Compose([
-                       transforms.ToTensor(),transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225]),
-                                     ])
 
-def gen_img_counts(img_path,model):
+transform = transforms.Compose([
+    transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                std=[0.229, 0.224, 0.225]),
+])
+
+
+def gen_img_counts(img_path, model):
     """
     given an image return the head count in the image
     """
@@ -23,10 +24,12 @@ def gen_img_counts(img_path,model):
 
 def score(output):
     if output < 400:
-        return np.tanh(152* output + 0.1578)
-    else: return 1.
+        return np.tanh(152 * output + 0.1578)
+    else:
+        return 1.
 
-def load_model(model_path,device):
+
+def load_model(model_path, device):
     """
     model_path: saved model (.pth or .pth.tar)
     #TODO: map_location
@@ -38,8 +41,7 @@ def load_model(model_path,device):
     return model
 
 
-
-def debug_pred(img_path,model,orig_img_path):
+def debug_pred(img_path, model, orig_img_path):
     """
     debug
     """
