@@ -13,8 +13,8 @@ import torch
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-#MODEL = load_model(model_path=MODEL_PATH, device=DEVICE)
-Model = None
+MODEL = load_model(model_path=MODEL_PATH, device=DEVICE)
+
 app = Flask('__name__')
 
 
@@ -31,7 +31,6 @@ def get_scores():
 
 @app.route('/map')
 def get_map():
-
     return render_template('index.html')
 
 
