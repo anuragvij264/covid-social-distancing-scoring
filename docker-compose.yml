@@ -1,0 +1,13 @@
+version: '2'
+volumes:
+  data: {}
+services:
+  covid_social_distancing_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: covid_social_distancing/web:latest
+    container_name: "covid_social_distancing"
+    ports:
+      - "5000:80"
+    working_dir: /app
