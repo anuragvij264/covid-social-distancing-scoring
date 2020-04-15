@@ -1,4 +1,5 @@
 import tweepy,json
+from config import CONFIG_PATH
 from tweepy import OAuthHandler
 import wget
 import os
@@ -69,7 +70,7 @@ def parse_config(config_file):
 
 
 def main():
-    config_file_path ="./config.ini"
+    config_file_path =  CONFIG_PATH
     parse_config(config_file=config_file_path)
     config = parse_config(config_file_path)
     auth = authorize_twitter_api(config)
