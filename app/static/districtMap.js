@@ -1,11 +1,20 @@
 function districtMap(districts, disputed) {
-
-    var width  = 800, height = 700, scale = 1200;
+    console.log(districts.features)
+    var width  = 8000, height = 700, scale = 1200;
     var propTag = 'Literacy', ttName = 'Literacy Rate', unit = '%';
-    
+
+    var isClick = false;
+    urlNames  = ['url1',"url2"];
+    index = 0 ;
+    var urlDisplayTable = "";
+
+    for (index= 0; index < urlNames.length; ++index)
+    {
+        urlDisplayTable+="<tr><td>" +  urlNames[index] + "</td></tr>";
+
+    }
     function render(selection) {
       selection.each(function() {
-
         d3.select(this).select("svg").remove();
         var svg = d3.select(this).append("svg")
                     .attr("width", width)
@@ -20,29 +29,49 @@ function districtMap(districts, disputed) {
             .translate([width / 2, height / 2]);
     
         var path = d3.geo.path().projection(projection);
-
         svg.selectAll(".district")
             .data(districts.features)
           .enter().append("path")
             .attr("class", "district")
             .style("fill", function(d) { return d.color; })
             .attr("d", path)
-          .on("mouseover", function(d) {      
-                 d3.select("#tooltip").transition()        
+          .on("mouseover", function(d) {
+                 d3.select("#tooltip").transition()
                     .duration(200)      
                     .style("opacity", .9);      
                  d3.select("#tooltip").html("<h3>"+(d.id)+"</h3><h4>("+(d.properties.NAME_1)+")</h4><table>"+
                           "<tr><td>"+ttName+"</td><td>"+(d.properties[propTag])+unit+"</td></tr>"+
-                          "</table>")
+                          "<tr><td> Average Social Distance Score:" + "</td><td>" + d.properties[propTag] + unit + "</td></tr>" +
+                          "<tr><td> Sources:" + "</td><td>"  // + d.properties[propTag]
+                           +"<table>" + urlDisplayTable +"</table>"
+                           + "</td></tr>" + "</table>"
+                          ).classed("hide",false)
                     .style("left", (d3.event.pageX-document.getElementById('map').offsetLeft + 20) + "px") 
                     .style("top", (d3.event.pageY-document.getElementById('map').offsetTop - 60) + "px");
           })  
-          .on("mouseout", function(d) {       
-                 d3.select("#tooltip").transition()        
-                    .duration(500)      
-                    .style("opacity", 0);   
-          });
-          
+          .on("mouseout", function(d) {
+                console.log(isClick)
+                if (isClick){
+                 d3.select("#tooltip").transition()
+                    .duration(500)
+                    .style("opacity", 60);
+                    }
+          })
+          .on("click",click);
+
+        function click(d){
+            isClick = true;
+            console.log(isClick)
+            d3.select("#tooltip").html("<h3>"+(d.id)+"</h3><h4>("+(d.properties.NAME_1)+")</h4><table>"+
+                          "<tr><td>"+ttName+"</td><td>"+(d.properties[propTag])+unit+"</td></tr>"+
+                          "<tr><td> Average Social Distance Score:" + "</td><td>" + d.properties[propTag] + unit + "</td></tr>" +
+                          "<tr><td> Sources:" + "</td><td>"  // + d.properties[propTag]
+                           +"<table>" + urlDisplayTable +"</table>"
+                           + "</td></tr>" + "</table>"
+                          ).classed("hide",false)
+                          .style("left", (d3.event.pageX-document.getElementById('map').offsetLeft + 20) + "px")
+                    .style("top", (d3.event.pageY-document.getElementById('map').offsetTop - 60) + "px");
+        }
         svg.selectAll(".disputed")
             .data(disputed.features)
           .enter().append("path")
