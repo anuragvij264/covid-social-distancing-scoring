@@ -1,6 +1,6 @@
 (function() {
     d3.queue()
-        .defer(d3.json, "https://raw.githubusercontent.com/akshat-khare/datavisproject/master/IND_adm2_Literacy.json")
+        .defer(d3.json, "static/IND_adm2_Literacy.json")
         .defer(d3.json, "https://raw.githubusercontent.com/akshat-khare/datavisproject/master/ne_10m_admin_0_Kashmir_Occupied.json")
         .await(function(error, topoMain, topoKashmir) {
             var districts, disputed;
@@ -10,25 +10,27 @@
             districts   = topojson.feature(topoMain, topoMain.objects.IND_adm2);
             disputed    = topojson.feature(topoKashmir, topoKashmir.objects.ne_10m_admin_0_Kashmir_Occupied);
 
-            // Radio HTML
-            d3.select("#select").call(selectFilter());
-            var filter  = d3.select('#select input[name="gender"]:checked').node().value;
+             //Radio HTML
+//            d3.select("#select").call(selectFilter());
+//            var filter = d3.select('#select input[name="gender"]:checked').node().value;
 
             // Color codes for districts based on Literacy Rates
             colorCode(districts.features, filter);
             colorDisputed(disputed.features);
 
             // Map render
-            var map     = districtMap(districts, disputed).width(800).height(700).scale(1200).propTag(filter);
+            var filter = 'social distance'
+            var map = districtMap(districts, disputed).width(800).height(700).scale(1200).propTag(filter);
             d3.select("#map").call(map);
 
             // On change of selection re-render
-            d3.selectAll("#select input[name=gender]").on("change", function() {
-                filter  = d3.select('#select input[name="gender"]:checked').node().value;
-                colorCode(districts.features, filter);
-                map     = districtMap(districts, disputed).width(800).height(700).scale(1200).propTag(filter);
-                d3.select("#map").call(map);
-            });
+
+//            d3.selectAll("#select input[name=gender]").on("change", function() {
+//                filter = d3.select('#select input[name="gender"]:checked').node().value;
+//                colorCode(districts.features, filter);
+//                map     = districtMap(districts, disputed).width(800).height(700).scale(1200).propTag(filter);
+//                d3.select("#map").call(map);
+//            });
         });
 }());
 
@@ -46,6 +48,7 @@ return render;
 } // selectFilter
 
 function colorCode(data, filter) {
+    var filter = 'Literacy'
     var color = d3.scale.threshold()
                   .domain([65, 72, 78, 85])
                   .range(["#dadaeb", "#bcbddc", "#9e9ac8", "#807dba", "#6a51a3"]);
