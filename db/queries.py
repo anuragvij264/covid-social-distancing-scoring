@@ -1,6 +1,6 @@
 import sqlalchemy as db
 
-engine = db.create_engine("mysql+mysqldb://user:password@0.0.0.0:3308/db")
+engine = db.create_engine("mysql+mysqldb://user:password@0.0.0.0:3306/database")
 
 def create_tables():
 
@@ -10,10 +10,10 @@ def create_tables():
     images = db.Table('images',metadata,
                       db.Column('id', db.Integer()),
                       db.Column('timestamp',db.DateTime()),
-                      db.Column('user_name',db.String()),
-                      db.Column('media_url',db.String()),
-                      db.Column('tweet_url',db.String()),
-                      db.Column('output_dir',db.String())
+                      db.Column('user_name',db.String(100)),
+                      db.Column('media_url',db.String(100)),
+                      db.Column('tweet_url',db.String(500)),
+                      db.Column('output_dir',db.String(100))
  )
     metadata.create_all(engine)
 
