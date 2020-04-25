@@ -1,3 +1,6 @@
+
+import sys
+sys.path.append("..")
 import tweepy,json
 from config import CONFIG_PATH
 from tweepy import OAuthHandler
