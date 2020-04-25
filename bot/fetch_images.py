@@ -78,7 +78,7 @@ def download(status,num_tweets, output_dir):
 
         ## TODO: experimental (remove it later)
         import random
-        scores = [random.randint() for _ in range(image_urls_list)]
+        scores = [random.randint(0,10) for _ in range(len(image_urls_list))]
 
         df=pd.concat([df,pd.DataFrame.from_records({'id':int(tweetId),'district':loc,
                                                     'image_urls':image_urls_list,
@@ -86,7 +86,7 @@ def download(status,num_tweets, output_dir):
                                                     "output_dir":os.path.join(output_dir,file_name),
                                                     "score": scores})])
 
-        df.to_sql(name='images2', con=engine, if_exists='append', index=True)
+        df.to_sql(name='images2', con=engine, if_exists='append', index=False)
 
 
 def download_images_by_user(api, username, retweets, replies, num_tweets, output_folder):
